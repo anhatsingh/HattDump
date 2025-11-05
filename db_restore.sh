@@ -106,7 +106,7 @@ download_backup() {
             log INFO "DRY RUN: ssh $REMOTE_USER@$REMOTE_HOST docker exec -t $REMOTE_CONTAINER pg_dump -U $REMOTE_DB_USER $DB | gzip > $BACKUP_FILE"
         else
             $SSH_CMD "$REMOTE_USER@$REMOTE_HOST" \
-            "docker exec -t $REMOTE_CONTAINER pg_dump -U $REMOTE_DB_USER $DB | gzip" \
+            "docker exec -t $REMOTE_CONTAINER pg_dump --no-owner --no-acl -U $REMOTE_DB_USER $DB | gzip" \
             > "$BACKUP_FILE"
 
             if [[ ! -s "$BACKUP_FILE" ]]; then
